@@ -1,0 +1,115 @@
+<div class="container-home">
+    <div class="navbar">
+        <button type="button" (click)="open(mymodal)" class="btn btn-success button-add"><mat-icon>add</mat-icon></button>
+        <button type="button" (click)="logOut()" class="btn btn-danger test">Log Out</button>
+    </div>
+    <div class="home-body">
+        <div *ngIf="isWeatherServiceActivated == true">
+            <div class="cards">
+                <div class="card-inside" *ngIf="isWeatherData == false">
+                    <div class="text-center title">
+                        <h1>Weather</h1>
+                    </div>
+                    <input type="text" class="form-control" placeholder="city" [(ngModel)]="cityName">
+                    <button class="btn btn-success btn-search" (click)="getWeather(); setUserService('weather', cityName)">Search</button>
+                </div>
+                <div class="card-inside-weather" *ngIf="isWeatherData == true">
+                    <div style="display: flex; align-items: center;">
+                        <button class="btn-back" (click)="isWeatherData = false; setUserService('weather', '')">
+                            <mat-icon style="color: white">keyboard_backspace</mat-icon>
+                        </button>
+                        <p style="margin-top: 18px; margin-left: 50px;">{{ weatherDate | date: 'd/M/y H:m:s' }}</p>
+                    </div>
+                    <div style="flex: 1; display: flex; flex-direction: row;">
+                        <div style="flex: 0.5; display: flex; justify-content: center; align-items: center;">
+                            <img [src]='iconWeather' alt="image"/>
+                        </div>
+                        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                            <h1>{{ cityName }}</h1>
+                            <p>{{ temp | number: '1.2-2'}} °C</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isCinemaServiceActivated == true">
+            <div class="cards">
+                <div class="card-inside" *ngIf="isMovieData == false">
+                    <div class="text-center title">
+                        <h1>Cinema</h1>
+                    </div>
+                    <input type="text" class="form-control" placeholder="movie name" [(ngModel)]="movieName">
+                    <button class="btn btn-success btn-search" (click)="getMovieByName(); setUserService('cinema', movieName)">Search</button>
+                </div>
+                <div class="card-inside" *ngIf="isMovieData == true">
+                    <button class="btn-back" (click)="clearMovieSearch(); setUserService('cinema', '')">
+                        <mat-icon style="color: white">keyboard_backspace</mat-icon>
+                    </button>
+                    <perfect-scrollbar style="max-width: 900px; max-height: 400px;" [perfectScrollbar]="config">
+                        <div *ngFor="let movie of movies" >
+                            <h1>{{ movie.title }}</h1>
+                            <div  *ngIf="movie.image != null">
+                                <img style="width: 160px; height: 250px;" src="{{ movie.image }}" alt="image">
+                            </div>
+                            <p>{{ movie.description }}</p>
+                        </div>
+                    </perfect-scrollbar>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isYoutubeServiceActivated == true">
+            <div class="cards">
+                <div class="card-inside" *ngIf="isYoutubeData == false">
+                    <div class="text-center title">
+                        <h1>Youtube</h1>
+                    </div>
+                    <input type="text" class="form-control" placeholder="youtube video" [(ngModel)]="youtubeSearch">
+                    <button class="btn btn-success btn-search" (click)="getYoutubeVideo(); setUserService('youtube', youtubeSearch)">Search</button>
+                </div>
+                <div class="card-inside" *ngIf="isYoutubeData == true">
+                    <button class="btn-back" (click)="clearYoutubeSearch(); setUserService('youtube', '')">
+                        <mat-icon style="color: white">keyboard_backspace</mat-icon>
+                    </button>
+                    <perfect-scrollbar style="max-width: 900px; max-height: 400px;" [perfectScrollbar]="config">
+                        <div *ngFor="let youtube of youtubeVideo">
+                            <iframe width="420" height="315" [src]="youtube.video"></iframe>
+                        </div>
+                    </perfect-scrollbar>
+                </div>
+            </div>
+        </div>
+        <!-- <div *ngIf="isSteamServiceActivated == true">
+            <div class="cards">
+                <div class="card-inside" *ngIf="isSteamData == false">
+                    <div class="text-center title">
+                        <h1>Steam</h1>
+                    </div>
+                    <input type="text" class="form-control" placeholder="search user by steam id" [(ngModel)]="steamSearch">
+                    <button class="btn btn-success btn-search" (click)="getSteamUser()">Search</button>
+                </div>
+                <div class="card-inside" *ngIf="isSteamData == true">
+                    <button class="btn-back" (click)="isSteamData = false">
+                        <mat-icon style="color: white">keyboard_backspace</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+<ng-template #mymodal let-modal>
+    <div class="modal-container">
+        <!-- <button class="btn button-steam" (click)="isSteamServiceActivated = !isSteamServiceActivated">
+            <i class="iconify service-icon" data-icon="mdi:steam"></i>
+        </button> -->
+        <button class="btn button-steam" (click)="activateOrDesactivateWeather()">
+            <i class="iconify service-icon" data-icon="fluent:weather-drizzle-20-regular"></i>
+        </button>
+        <button class="btn button-steam" (click)="activateOrDesactivateYoutube()">
+            <i class="iconify service-icon" data-icon="logos:youtube-icon"></i>
+        </button>
+        <button class="btn button-steam" (click)="activateOrDesactivateCinema()">
+            <i class="iconify service-icon" data-icon="fxemoji:cinema"></i>
+        </button>
+    </div>
+</ng-template>

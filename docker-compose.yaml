@@ -1,0 +1,24 @@
+version: '3'
+services:
+  server:
+    build: ./server
+    ports:
+      - 8081:8080
+  client:
+    build: ./client
+    ports:
+      - 8080:4200
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017 
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=psd
+      - MONGO_INITDB_DATABASE=dashbase
+    volumes:
+      - ./database/init:/docker-entrypoint-initdb.d
+      - ./database/init:/home/mongodb
+      - mongo-volume:/data/db
+volumes:
+  mongo-volume:

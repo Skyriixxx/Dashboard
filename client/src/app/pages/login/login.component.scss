@@ -1,0 +1,33 @@
+.container-login {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(35, 42, 58);
+}
+
+.card {
+    border: none;
+    width: 500px;
+    padding: 40px;
+    background: linear-gradient(90deg, hsla(205, 46%, 30%, 1) 0%, hsla(260, 29%, 36%, 1) 100%);
+}
+
+.card, label, h1, a {
+    color: #fff
+}
+
+.form-group {
+    margin-top: 20px;
+}
+
+.label {
+    margin-bottom: 10px;
+}
+
+.link {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    color: #fff;
+}
